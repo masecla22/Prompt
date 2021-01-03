@@ -1,15 +1,16 @@
 package masecla.prompt.classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseBuilder {
 	private int statuscode;
 	private String msgcode;
 
-	private Map<String, ArrayList<String>> headers;
+	private Map<String, ArrayList<String>> headers = new HashMap<>();
 
-	private String body;
+	private byte[] body;
 
 	private ResponseBuilder() {
 	}
@@ -28,15 +29,20 @@ public class ResponseBuilder {
 		return this;
 	}
 
-	public ResponseBuilder setBody(String body) {
+	public ResponseBuilder setBody(byte[] body) {
 		this.body = body;
+		return this;
+	}
+
+	public ResponseBuilder setBody(String body) {
+		this.body = body.getBytes();
 		return this;
 	}
 
 	public ResponseBuilder header(String key, String data) {
 		ArrayList<String> res = new ArrayList<>();
 		res.add(data);
-		this.headers.put(data, res);
+		this.headers.put(key, res);
 		return this;
 	}
 
